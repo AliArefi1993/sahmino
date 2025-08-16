@@ -1,29 +1,29 @@
+from rest_framework import generics, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Item, ItemTypeEnum, DoneByEnum
+from .serilizers import ItemSerializer
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_http_methods
-import json
-from .models import Item
 
-@csrf_exempt
-@require_http_methods(["POST"])
-def create_item(request):
-	try:
-		data = json.loads(request.body)
-		item = Item.objects.create(
-			date=data["date"],
-			done_by=data["done_by"],
-			task=data["task"],
-			type=data["type"],
-			quantity=data["quantity"],
-			base_gvt=data["base_gvt"],
-			gvt_earned=data["gvt_earned"]
-		)
-		return JsonResponse({"id": item.id, "message": "Item created successfully."}, status=201)
-	except Exception as e:
-		return JsonResponse({"error": str(e)}, status=400)
+class ItemListCreateView(generics.ListCreateAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
 
-@require_http_methods(["GET"])
-def get_items(request):
-	items = Item.objects.all().values()
-	return JsonResponse(list(items), safe=False)
+
+class ItemDeleteView(generics.DestroyAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+
+# Endpoint to get allowed item types
+class ItemTypeChoicesView(APIView):
+    def get(self, request):
+        types = [choice[0] for choice in ItemTypeEnum.choices()]
+        return Response({"types": types})
+
+# Endpoint to get allowed done_by values
+class DoneByChoicesView(APIView):
+    def get(self, request):
+        done_by = [choice[0] for choice in DoneByEnum.choices()]
+        return Response({"done_by": done_by})

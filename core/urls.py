@@ -1,7 +1,10 @@
+
 from django.urls import path
-from . import views
+from .views import ItemListCreateView, ItemDeleteView, ItemTypeChoicesView, DoneByChoicesView
 
 urlpatterns = [
-    path('items/', views.get_items, name='get_items'),
-    path('items/create/', views.create_item, name='create_item'),
+    path('items/', ItemListCreateView.as_view(), name='item-list-create'),
+    path('items/<int:pk>/delete/', ItemDeleteView.as_view(), name='item-delete'),
+    path('item-types/', ItemTypeChoicesView.as_view(), name='item-type-choices'),
+    path('done-by/', DoneByChoicesView.as_view(), name='done-by-choices'),
 ]
