@@ -1,8 +1,8 @@
-from rest_framework import generics, status
-from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework import status
-from .models import Item, ItemTypeEnum, DoneByEnum
+from rest_framework.views import APIView
+
+from .models import DoneByEnum, Item, ItemTypeEnum
 from .serilizers import ItemSerializer
 
 
@@ -21,6 +21,7 @@ class ItemTypeChoicesView(APIView):
     def get(self, request):
         types = [choice[0] for choice in ItemTypeEnum.choices()]
         return Response({"types": types})
+
 
 # Endpoint to get allowed done_by values
 class DoneByChoicesView(APIView):

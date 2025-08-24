@@ -6,23 +6,50 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0001_initial'),
+        ("core", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='item',
-            name='status',
-            field=models.CharField(choices=[('Done', 'Done'), ('To Do', 'To Do'), ('In Progress', 'In Progress')], default='To Do', max_length=20),
+            model_name="item",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("Done", "Done"),
+                    ("To Do", "To Do"),
+                    ("In Progress", "In Progress"),
+                ],
+                default="To Do",
+                max_length=20,
+            ),
         ),
         migrations.AlterField(
-            model_name='item',
-            name='done_by',
-            field=models.CharField(blank=True, choices=[('Ali', 'Ali'), ('Javad', 'Javad'), ('Amirreza', 'Amirreza'), ('Foad', 'Foad')], max_length=100),
+            model_name="item",
+            name="done_by",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("Ali", "Ali"),
+                    ("Javad", "Javad"),
+                    ("Amirreza", "Amirreza"),
+                    ("Foad", "Foad"),
+                ],
+                max_length=100,
+            ),
         ),
         migrations.AlterField(
-            model_name='item',
-            name='type',
-            field=models.CharField(choices=[('Branding', 'Branding'), ('Finance', 'Finance'), ('Fundraising', 'Fundraising'), ('Admin/Meetings', 'Admin/Meetings'), ('Production', 'Production'), ('Sale', 'Sale')], max_length=100),
+            model_name="item",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("Branding", "Branding"),
+                    ("Finance", "Finance"),
+                    ("Fundraising", "Fundraising"),
+                    ("Admin/Meetings", "Admin/Meetings"),
+                    ("Production", "Production"),
+                    ("Sale", "Sale"),
+                ],
+                max_length=100,
+            ),
         ),
     ]

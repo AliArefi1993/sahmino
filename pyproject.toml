@@ -20,8 +20,10 @@ isort = "^5.12"
 mypy = "^1.7"
 flake8 = "^7.0"
 pre-commit = "^3.4"
+flake8-pyproject = "^1.2.3"
+
 [tool.flake8]
-max-line-length = 88
+max-line-length = 91
 extend-ignore = ["E203", "W503"]
 exclude = [".venv", "migrations", "__pycache__"]
 

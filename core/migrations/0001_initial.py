@@ -7,21 +7,28 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies: list = []
 
     operations = [
         migrations.CreateModel(
-            name='Item',
+            name="Item",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField()),
-                ('done_by', models.CharField(max_length=100)),
-                ('task', models.CharField(max_length=255)),
-                ('type', models.CharField(max_length=100)),
-                ('quantity', models.IntegerField()),
-                ('base_gvt', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('gvt_earned', models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField()),
+                ("done_by", models.CharField(max_length=100)),
+                ("task", models.CharField(max_length=255)),
+                ("type", models.CharField(max_length=100)),
+                ("quantity", models.IntegerField()),
+                ("base_gvt", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("gvt_earned", models.DecimalField(decimal_places=2, max_digits=10)),
             ],
         ),
     ]
