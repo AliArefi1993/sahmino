@@ -7,9 +7,26 @@ This directory contains documentation for the Django backend project.
 - `sahmino/`: Project settings, URLs, and WSGI/ASGI entry points.
 
 ## Getting Started
-1. **Install dependencies:**
+
+You can use either a traditional `requirements.txt` workflow or the modern `pyproject.toml` (Poetry) workflow.
+
+1. Using requirements.txt:
    ```bash
    pip install -r requirements.txt
+   ```
+
+2. Using Poetry / pyproject.toml:
+   ```bash
+   # Install Poetry (if not installed)
+   curl -sSL https://install.python-poetry.org | python3 -
+
+   # Install dependencies and create virtual environment
+   poetry install
+
+   # Activate the venv (or use `poetry run` to run commands)
+   poetry shell
+   python manage.py migrate
+   python manage.py runserver
    ```
 2. **Run migrations:**
    ```bash
