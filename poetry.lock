@@ -145,6 +145,21 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-cors-headers"
+version = "4.7.0"
+description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "django_cors_headers-4.7.0-py3-none-any.whl", hash = "sha256:f1c125dcd58479fe7a67fe2499c16ee38b81b397463cf025f0e2c42937421070"},
+    {file = "django_cors_headers-4.7.0.tar.gz", hash = "sha256:6fdf31bf9c6d6448ba09ef57157db2268d515d94fc5c89a0a1028e1fc03ee52b"},
+]
+
+[package.dependencies]
+asgiref = ">=3.6"
+django = ">=4.2"
+
+[[package]]
 name = "djangorestframework"
 version = "3.16.1"
 description = "Web APIs for Django, made easy."
@@ -180,6 +195,20 @@ uritemplate = ">=2.0.0"
 [package.extras]
 offline = ["drf-spectacular-sidecar"]
 sidecar = ["drf-spectacular-sidecar"]
+
+[[package]]
+name = "drf-spectacular-sidecar"
+version = "2025.8.1"
+description = "Serve self-contained distribution builds of Swagger UI and Redoc with Django"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "drf_spectacular_sidecar-2025.8.1-py3-none-any.whl", hash = "sha256:c65a2a423000cc067395150b4dc28e7398a762d66ee101c4c38a4fb0d29a42a2"},
+    {file = "drf_spectacular_sidecar-2025.8.1.tar.gz", hash = "sha256:1944ae0eb5136cff5aa135211bec31084cef1af03a04de9b7f2f912b3c59c251"},
+]
+
+[package.dependencies]
+Django = ">=2.2"
 
 [[package]]
 name = "drf-yasg"
@@ -880,4 +909,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "1ca092f334b15b2023a331e61794850d58afd8c0feb4147a4c0d46e83518f033"
+content-hash = "c63fb35ddb7499768b5dd6777458dc7c32b39d556e6851a39a8350ac0d4c93b2"

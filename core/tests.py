@@ -53,3 +53,30 @@ class ItemAPITests(APITestCase):
         self.assertIn("done_by", response.data)
         self.assertTrue(isinstance(response.data["done_by"], list))
         self.assertIn("Ali", response.data["done_by"])
+
+    def test_update_item_put(self):
+        url = reverse("item-retrieve-update", args=[self.item.id])
+        data = {
+            "date": "2025-08-17",
+            "done_by": "Ali",
+            "task": "Updated Task",
+            "type": "Branding",
+            "quantity": 2,
+            "base_gvt": "5.00",
+            "gvt_earned": "10.00",
+            "status": "Done",
+        }
+        response = self.client.put(url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.item.refresh_from_db()
+        self.assertEqual(self.item.task, "Updated Task")
+        self.assertEqual(self.item.status, "Done")
+
+    def test_update_item_patch(self):
+        url = reverse("item-retrieve-update", args=[self.item.id])
+        data = {"quantity": 10, "gvt_earned": "100.00"}
+        response = self.client.patch(url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.item.refresh_from_db()
+        self.assertEqual(self.item.quantity, 10)
+        self.assertEqual(str(self.item.gvt_earned), "100.00")
