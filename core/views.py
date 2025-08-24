@@ -16,6 +16,13 @@ class ItemDeleteView(generics.DestroyAPIView):
     serializer_class = ItemSerializer
 
 
+class ItemRetrieveUpdateView(generics.RetrieveUpdateAPIView):
+    """Retrieve an item by id and allow updating (PUT/PATCH)."""
+
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+
 # Endpoint to get allowed item types
 class ItemTypeChoicesView(APIView):
     def get(self, request):
