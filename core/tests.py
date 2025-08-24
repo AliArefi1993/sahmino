@@ -80,3 +80,35 @@ class ItemAPITests(APITestCase):
         self.item.refresh_from_db()
         self.assertEqual(self.item.quantity, 10)
         self.assertEqual(str(self.item.gvt_earned), "100.00")
+
+    def test_done_by_totals(self):
+        # Create additional items for different people and statuses
+        Item.objects.create(
+            date="2025-08-16",
+            done_by="Ali",
+            task="Done Task",
+            type="Branding",
+            status="Done",
+            quantity=2,
+            base_gvt="5.00",
+            gvt_earned="10.00",
+        )
+        Item.objects.create(
+            date="2025-08-16",
+            done_by="Javad",
+            task="Done Task 2",
+            type="Sale",
+            status="Done",
+            quantity=3,
+            base_gvt="7.00",
+            gvt_earned="21.00",
+        )
+
+        url = reverse("done-by-totals")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("totals", response.data)
+        totals = {t["done_by"]: t["total_gvt"] for t in response.data["totals"]}
+        # Ali should have at least the two done entries total (existing + created)
+        self.assertIn("Ali", totals)
+        self.assertIn("Javad", totals)
