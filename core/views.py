@@ -1,5 +1,7 @@
 from django.db.models import Sum
 from rest_framework import generics
+
+# from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -10,11 +12,13 @@ from .serilizers import ItemSerializer
 class ItemListCreateView(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    # permission_classes = [AllowAny]
 
 
 class ItemDeleteView(generics.DestroyAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    # permission_classes = [AllowAny]
 
 
 class ItemRetrieveUpdateView(generics.RetrieveUpdateAPIView):
@@ -22,10 +26,13 @@ class ItemRetrieveUpdateView(generics.RetrieveUpdateAPIView):
 
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    # permission_classes = [AllowAny]
 
 
 # Endpoint to get allowed item types
 class ItemTypeChoicesView(APIView):
+    # permission_classes = [AllowAny]
+
     def get(self, request):
         types = [choice[0] for choice in ItemTypeEnum.choices()]
         return Response({"types": types})
@@ -33,6 +40,8 @@ class ItemTypeChoicesView(APIView):
 
 # Endpoint to get allowed done_by values
 class DoneByChoicesView(APIView):
+    # permission_classes = [AllowAny]
+
     def get(self, request):
         done_by = [choice[0] for choice in DoneByEnum.choices()]
         return Response({"done_by": done_by})
@@ -40,6 +49,8 @@ class DoneByChoicesView(APIView):
 
 # Endpoint to return total GVT earned per person for tasks with status='Done'
 class DoneByGvtTotalsView(APIView):
+    # permission_classes = [AllowAny]
+
     def get(self, request):
         # Sum gvt_earned grouped by done_by for items marked Done
         qs = (
