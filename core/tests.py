@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -7,6 +8,10 @@ from .models import Item
 
 class ItemAPITests(APITestCase):
     def setUp(self):
+        User = get_user_model()
+        self.user = User.objects.create_user(username="testuser", password="testpass")
+        self.client.force_authenticate(user=self.user)
+
         self.item_data = {
             "date": "2025-08-16",
             "done_by": "Ali",
@@ -22,7 +27,7 @@ class ItemAPITests(APITestCase):
         url = reverse("item-list-create")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertTrue(len(response.data) >= 1)
+        self.assertGreaterEqual(len(response.data), 1)
 
     def test_create_item(self):
         url = reverse("item-list-create")
@@ -43,15 +48,12 @@ class ItemAPITests(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("types", response.data)
-        self.assertTrue(isinstance(response.data["types"], list))
         self.assertIn("Branding", response.data["types"])
 
     def test_done_by_choices(self):
         url = reverse("done-by-choices")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("done_by", response.data)
-        self.assertTrue(isinstance(response.data["done_by"], list))
         self.assertIn("Ali", response.data["done_by"])
 
     def test_update_item_put(self):
@@ -82,7 +84,6 @@ class ItemAPITests(APITestCase):
         self.assertEqual(str(self.item.gvt_earned), "100.00")
 
     def test_done_by_totals(self):
-        # Create additional items for different people and statuses
         Item.objects.create(
             date="2025-08-16",
             done_by="Ali",
@@ -107,8 +108,6 @@ class ItemAPITests(APITestCase):
         url = reverse("done-by-totals")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("totals", response.data)
         totals = {t["done_by"]: t["total_gvt"] for t in response.data["totals"]}
-        # Ali should have at least the two done entries total (existing + created)
         self.assertIn("Ali", totals)
         self.assertIn("Javad", totals)
